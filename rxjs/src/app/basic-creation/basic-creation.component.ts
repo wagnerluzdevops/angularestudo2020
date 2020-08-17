@@ -59,6 +59,6 @@ export class BasicCreationComponent implements OnInit {
 
   unsubscribeClick() {
     this.subscription.unsubscribe();
-    this.subscription = new Subscription();
+    this.subscription = new Subscription()
   }
 }

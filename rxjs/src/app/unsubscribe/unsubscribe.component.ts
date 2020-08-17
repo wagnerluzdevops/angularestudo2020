@@ -11,7 +11,7 @@ export class UnsubscribeComponent implements OnInit {
 
   subscriptionsAreActive = false;
    subscriptions: Subscription[] = [];
-   unsubscribeAll$ : Subject<any> = new Subject();
+   unsubscribeAll$: Subject<any> = new Subject();
    intervalSubscription: Subscription = null;
   constructor() { }
 
@@ -21,23 +21,24 @@ export class UnsubscribeComponent implements OnInit {
 
   checkSubscriptions() {
     this.intervalSubscription = interval(100)
-      .subscribe(()=>{
+      .subscribe(() => {
         let active = false;
         this.subscriptions.forEach((s) => {
-          if (!s.closed)
+          if (!s.closed) {
             active = true;
-        })
+          }
+        });
         this.subscriptionsAreActive = active;
-      })
+      });
   }
-  
+
   subscribe() {
     const subscription1 = interval(100)
       .pipe(takeUntil(this.unsubscribeAll$))
-      .subscribe((i)=>{ console.log(i);})
+      .subscribe((i) => { console.log(i); });
     const subscription2 = fromEvent(document, 'mousemove')
       .pipe(takeUntil(this.unsubscribeAll$))
-      .subscribe((e)=>console.log(e));
+      .subscribe((e) => console.log(e));
     this.subscriptions.push(subscription1);
     this.subscriptions.push(subscription2);
   }
@@ -46,9 +47,11 @@ export class UnsubscribeComponent implements OnInit {
     this.unsubscribeAll$.next();
   }
 
+  // tslint:disable-next-line: use-life-cycle-interface
   ngOnDestroy() {
-    if (this.intervalSubscription!=null)
+    if (this.intervalSubscription != null) {
       this.intervalSubscription.unsubscribe();
+    }
     console.log('Destroy');
     this.unsubscribeAll$.next();
   }
