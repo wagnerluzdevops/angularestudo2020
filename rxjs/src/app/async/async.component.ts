@@ -22,34 +22,34 @@ export class AsyncComponent implements OnInit {
   ngOnInit() {
     this.options$ = Observable.create(
       (observer) => {
-        for(let i=0;i<10;i++) {
+        for (let i = 0; i < 10; i++) {
           observer.next(`This is my ${i}th option` );
         }
         observer.complete();
       }
     )
     .pipe(
-      map(s=>s+'!'),
+      map(s => s + '!'),
       toArray(),
       delay(1000)
     );
-    //this.options$.subscribe(s=>console.log(s));
+    // this.options$.subscribe(s=>console.log(s));
 
     this.user$ = new Observable<User>((observer) => {
-      let names  = ["Mr. James", "Mr. John", "Mr. Ray", "Ms. Angel"];
-      let logins = ["james", "john", "ray", "angel"];
+      const names  = ['Mr. James', 'Mr. John', 'Mr. Ray', 'Ms. Angel'];
+      const logins = ['james', 'john', 'ray', 'angel'];
       let i = 0;
-      console.log("Here in user$")
-      setInterval(()=>{
-        if (i==4)
+      console.log('Here in user$');
+      setInterval(() => {
+        if (i === 4) {
           observer.complete();
-        else {
+        } else {
           observer.next({login: logins[i], name: names[i]});
         }
         i++;
-      }, 3000)
-    })
-    //this.user$.subscribe(s=>console.log(s));
+      }, 3000);
+    });
+    // this.user$.subscribe(s=>console.log(s));
 
   }
 

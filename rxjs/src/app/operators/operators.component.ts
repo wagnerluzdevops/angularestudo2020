@@ -114,6 +114,7 @@ export class OperatorsComponent implements OnInit {
   }
 
   searchEntry$: Subject<string> =  new Subject<string>();
+  
   searchBy_UsingDebounce(event) {
     this.searchEntry$.next(this.searchInput);
   }
